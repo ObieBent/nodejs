@@ -13,17 +13,17 @@
         - 'main.yml'
       paths: '../vars'
 
-- include: config.yml
+- include_tasks: config.yml
   tags: config
 
-- include: "{{ ansible_os_family }}.yml"
+- include_tasks: "{{ ansible_os_family }}.yml"
   tags: config
 
-- include: install.yml
+- include_tasks: install.yml
   when: nodejs_version is defined and nodejs_version != nodejs_installed_version.stdout|default('')
   tags: setup
 
-- include: deploy.yml
+- include_tasks: deploy.yml
   tags: setup
 
 - name: main | Enable and Start nodejs service
@@ -33,5 +33,5 @@
     enabled: yes
   when: nodejs_install_pm2
 
-- include: script.yml
+- include_tasks: script.yml
   tags: script
